@@ -1,0 +1,49 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: weekly-sharepoint-agent
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: "1"
+    spec:
+      containerConcurrency: 80
+      timeoutSeconds: 300
+      containers:
+        - image: gcr.io/PROJECT_ID/weekly-sharepoint-agent:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_NAME
+              value: weekly-sharepoint-compliance-agent
+            - name: TENANT_ID
+              value: "00000000-0000-0000-0000-000000000000"
+            - name: CLIENT_ID
+              value: "00000000-0000-0000-0000-000000000000"
+            - name: CLIENT_SECRET
+              value: "replace-me"
+            - name: SHAREPOINT_SITE_ID
+              value: "contoso.sharepoint.com,11111111-2222-3333-4444-555555555555"
+            - name: SHAREPOINT_SITE_URL
+              value: "https://contoso.sharepoint.com/sites/LegalOps"
+            - name: SHAREPOINT_FILE_PATH
+              value: "Shared Documents/Compliance/Quarterly-Review.docx"
+            - name: TEAMS_TEAM_ID
+              value: "11111111-2222-3333-4444-555555555555"
+            - name: TEAMS_CHANNEL_ID
+              value: "11111111-2222-3333-4444-555555555555"
+            - name: EMAIL_TO
+              value: "alerts@contoso.com"
+            - name: EMAIL_FROM
+              value: "agent@contoso.com"
+            - name: PURVIEW_CLIENT_APP_ID
+              value: "00000000-0000-0000-0000-000000000000"
+            - name: PURVIEW_APP_NAME
+              value: "My Secure Agent"
+            - name: AZURE_OPENAI_ENDPOINT
+              value: "https://<your-resource>.services.ai.azure.com/api/projects/<project>"
+            - name: AZURE_OPENAI_CHAT_COMPLETION_MODEL
+              value: "gpt-4o-mini"
+            - name: PORT
+              value: "8080"
