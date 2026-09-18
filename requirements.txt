@@ -1,6 +1,6 @@
-Flask==3.0.3
-python-dotenv==1.0.1
-requests==2.32.3
+Flask==3.1.3
+python-dotenv==1.2.2
+requests==2.33.0
 azure-identity==1.17.1
 
 # Optional: only required once you enable the Agent Framework middleware.
